@@ -1,0 +1,68 @@
+<div class="flex flex-column gap-2 items-center mb-4">
+  <%=image_tag(@employee.avatar, class: "employee-card__image")%>
+  <p class="heading--sm"><%=@employee.name%></p>
+  <p><%=@employee.position%></p>
+  <p><%=@employee.department.name%></p>
+  <p><%=@employee.nationality%></p>
+  <p><%=@employee.birth_date%></p>
+  <div class="flex gap-2">
+    <%=link_to image_tag("icons/pencil.svg"), 
+                edit_employee_path(@employee), 
+                class: "action-icon"%>
+
+    <%=button_to image_tag("icons/trash.svg"), 
+                  employee_path(@employee), 
+                  method: :delete, "data-turbo": "false",
+                  class: "action-icon"%>
+  </div>
+</div>
+
+<div class="flex flex-column gap-8">
+  <h2 class="heading--xs">Manager</h2>
+  <%if @employee.manager%>
+    <%=render @employee.manager%>
+  <%else%>
+    <p>No manager</p>
+  <%end%>
+
+  <h2 class="heading--xs">Reports</h2>
+  <%@employee.reports.each do |employee|%>
+    <%=render employee%>
+  <%end%>
+
+  <%if @employee.reports.empty?%>
+    <p>No reports</p>
+  <%end%>
+</div>
+
+  <%# POST /employees/:employee_id/feedbacks %>
+  <%=form_with(model: [@employee, @feedback], class: "flex flex-column gap-4") do |form|%>
+    <div class="input">
+      <div class="input__container">
+        <%= form.text_area :content, class: "input__content", placeholder: "Remember to use SBI framework"%>
+      </div>
+    <%=errors_for(@feedback, :content)%>
+    </div>
+
+    <div>
+      <%= form.submit class: "button button--secondary full-width" %>
+    </div>
+  <%end%>
+  
+  <%@employee.feedbacks.each do |feedback|%>
+    <%if policy(feedback).show?%>
+      <div>
+        <p>By <%=feedback.employee.name%></p>
+        <p><%=feedback.content%></p>
+        <div>
+          <p><%=feedback.created_at%></p>
+          <%=button_to image_tag("icons/trash.svg"), 
+                  feedback_path(feedback),
+                  method: :delete, "data-turbo": "false",
+                  class: "action-icon"%>
+        </div>
+      </div>
+    <%else%>
+      <p>Sorry! You can only see your feedback and the feedback of your reports.</p>
+    <%end%>
+  <%end%>

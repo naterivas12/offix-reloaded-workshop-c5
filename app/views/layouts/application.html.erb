@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>OffixReloaded</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+    
+  <body>
+    <header class="header">
+      <div class="container navbar">
+        <%=link_to image_tag("/images/offix-logo.png"), root_path, class: "logo"%>
+        <nav>
+          <ul class="navbar-links" role="list">
+            <%if employee_signed_in?%>
+              <li>Welcome <%=current_employee.name%></li>
+              <li><%=link_to "Profile", "#"%></li>
+              <li><%=link_to "Search", "#"%></li>
+              <li>
+                  <%=button_to "Log Out", destroy_employee_session_path, method: :delete, data: { turbo: "false" }%>
+              </li>
+            <%else%>
+              <li><%=link_to "Sign in", new_employee_session_path%></li>
+            <%end%>
+          </ul>
+        </nav>
+        <div class="js-navbar-menu">
+          <%=image_tag "icons/menu.svg", class: "navbar__menu-icon"%>
+          <%=image_tag "icons/close.svg", class: "navbar__menu-icon-close"%>
+        </div>
+      </div>
+    </header>
+
+    <main class="section">
+      <section class="container">
+        <p style="color: green"><%= notice %></p>
+        <p style="color: red"><%= alert %></p>
+        <%= yield %>
+      </section>
+    </main>
+
+    <footer class="footer bg-gray-100">
+      <p>© 2022 - Offix</p>
+    </footer>
+
+  <script>
+    const navbarMenu = document.querySelector(".js-navbar-menu");
+    const navbar = document.querySelector(".navbar");
+    navbarMenu.addEventListener("click", () => navbar.classList.toggle("navbar--open"));
+  </script>
+  </body>
+</html>

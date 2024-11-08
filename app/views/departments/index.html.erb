@@ -1,0 +1,11 @@
+<div class="flex flex-column gap-4">
+  <h1 class="heading">Departments</h1>
+
+  <%=link_to "New Department", new_department_path, class: "button button--secondary button--sm fit-content"%>
+  
+  <div id="departments" class="flex flex-column gap-8">
+    <% @departments.each do |department| %>
+      <%= render department %>
+    <% end %>
+  </div>
+</div>

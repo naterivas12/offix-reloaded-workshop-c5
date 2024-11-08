@@ -1,0 +1,31 @@
+<%= form_with(model: department, class: "flex flex-column gap-4") do |form| %>
+  <div class="input">
+    <%= form.label :name, class:"content-xs overline"%>
+    <div class="input__container">
+      <%= form.text_field :name, class: "input__content", placeholder: "Secret planning", autofocus: true %>
+    </div>
+    <%=errors_for(department, :name)%>
+  </div>
+
+  <div class="input">
+    <%= form.label :description, class:"content-xs overline"%>
+    <div class="input__container">
+      <%= form.text_area :description, class: "input__content", placeholder: "This is the best department yet..."%>
+    </div>
+    <%=errors_for(department, :description)%>
+  </div>
+
+  <div class="input">
+    <%= form.label :cover, class:"content-xs overline"%>
+
+    <%=image_tag(department.cover, class: "department-card__image") if department.cover.attached?%>
+
+    <%= form.file_field :cover, class: "input__content"%>
+
+    <%=errors_for(department, :cover)%>
+  </div>
+
+  <div>
+    <%= form.submit class: "button button--secondary full-width" %>
+  </div>
+<% end %>

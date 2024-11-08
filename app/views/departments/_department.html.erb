@@ -1,0 +1,19 @@
+<div id="<%= dom_id department %>" class="department-card">
+  <%=image_tag department.cover, class: "department-card__image"%>
+  <div>
+    <div class="department-card__content">
+      <%=link_to content_tag("p", department.name, class: "heading--sm"), department_path(department)%>
+      <p class="content--sm"><%=department.employees_count%> employees</p>
+    </div>
+    <div class="department-card__actions">
+      <%=link_to image_tag("icons/pencil.svg"), 
+                 edit_department_path(department), 
+                 class: "action-icon"%>
+
+      <%=button_to image_tag("icons/trash.svg"), 
+                   department_path(department), 
+                   method: :delete, data: { turbo: "false" },
+                   class: "action-icon"%>
+    </div>
+  </div>
+</div>

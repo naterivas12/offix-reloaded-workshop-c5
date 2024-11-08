@@ -1,0 +1,8 @@
+<div class="flex flex-column gap-4">
+  <h1 class="heading">New Employee</h1>
+
+  <%= render "form", department: @department, employee: @employee, departments: @departments, employees: @employees %>
+
+  <%= link_to "Back", department_path(@department), class: "button button--subtle" %>
+
+</div>

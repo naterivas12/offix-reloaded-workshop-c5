@@ -1,0 +1,37 @@
+<div class="flex flex-column gap-4">
+  <h1 class="heading"><%=@department.name%></h1>
+  <p><%=@department.description%></p>
+  <%=link_to "New Employee", new_department_employee_path(@department), class: "button button--secondary button--sm fit-content"%>
+  <%@department.employees.each do |employee|%>
+    <%=render employee%>
+  <%end%>
+
+  <%# POST /departments/:department_id/feedbacks %>
+  <%=form_with(model: [@department, @feedback], class: "flex flex-column gap-4") do |form|%>
+    <div class="input">
+      <div class="input__container">
+        <%= form.text_area :content, class: "input__content", placeholder: "Remember to use SBI framework"%>
+      </div>
+    <%=errors_for(@feedback, :content)%>
+    </div>
+
+    <div>
+      <%= form.submit class: "button button--secondary full-width" %>
+    </div>
+  <%end%>
+  
+  <%@department.feedbacks.each do |feedback|%>
+    <div>
+      <p>By <%=feedback.employee.name%></p>
+      <p><%=feedback.content%></p>
+      <div>
+        <p><%=feedback.created_at%></p>
+        <%=button_to image_tag("icons/trash.svg"), 
+                feedback_path(feedback),
+                method: :delete, "data-turbo": "false",
+                class: "action-icon"%>
+      </div>
+    </div>
+  <%end%>
+
+</div>

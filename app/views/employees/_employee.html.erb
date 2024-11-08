@@ -1,0 +1,19 @@
+<div class="employee-card">
+  <div class="employee-card__content">
+    <%=image_tag employee.avatar, class: "employee-card__image"%>
+    <div class="employee-card__data">
+      <%=link_to content_tag("p", employee.name), employee_path(employee), class: "heading--xs"%>
+      <p class="content-sm"><%=employee.position%></p>
+    </div>
+  </div>
+  <div class="employee-card__actions">
+    <%=link_to image_tag("icons/pencil.svg"), 
+                edit_employee_path(employee), 
+                class: "action-icon"%>
+
+    <%=button_to image_tag("icons/trash.svg"), 
+                  employee_path(employee), 
+                  method: :delete, "data-turbo": "false",
+                  class: "action-icon"%>
+  </div>
+</div>
